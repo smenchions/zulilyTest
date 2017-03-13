@@ -1,0 +1,147 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="view-homepage">
+    <div class="row">
+        <div class="col-md-3">
+            <br /><br />
+            <div class="alert alert-danger hidden" data-bind="css: { hidden: error() == null }, text:error"></div>
+            <br />
+        </div>
+    </div>
+
+    
+
+    <div class="modal fade" id="captureEmail" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="pull-right">
+                        Already a member?&nbsp;<a href="https://www.zulily.com/" target="_blank">SIGN IN</a>
+                    </div>                  
+                </div>
+                <div class="modal-body">
+                    <h2>DAILY DEALS UP TO 70% OFF!</h2><br />
+                    <h6>SIGN UP FOR FREE AND START SHOPPING</h6>
+                    <br />
+                    <h6>email address</h6>
+                    <input  class="form-control" type="text" data-bind="value: user.email, css: {invalidEmail: user.emailValid() == false }"/>
+                    <br /><br />
+                    <button type="button" class="btn btn-primary btn-lg btn-block" data-bind="click: getUser">Shop Now!</button>
+                    <br />
+                </div>
+                <div class="modal-footer legal-text">
+                    By signing up, you agree to zulily's
+                    Terms & Conditions, Arbitration Program and Privacy Practices.
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <button type="button" class="btn btn-primary" data-bind="click: logout">Erase &amp; Start Over</button>
+        </div>
+    </div>
+    <br /><br />
+    <div data-bind="visible: user.sId()" style="display:none">
+        <!-- using style tag to stop flicker before js fires-->
+        <div class="row" data-bind="visible:surveyTemplate.images().length == 0">
+            <div class="col-md-8">
+                <h3>Let us customize your zulily shopping experience!</h3>
+                <div class="well">
+                    When shopping on zulily who will you normally be shopping for?
+                    <br /><br />
+                    <div class="btn-group">
+                        <label class="btn btn-primary" data-bind="css: {active: surveyResult.gender() == 'Female'}">
+                            <input type="radio" name="options" value="Female" data-bind="checked: surveyResult.gender">Female
+                        </label>
+                        <label class="btn btn-primary" data-bind="css: {active: surveyResult.gender() == 'Male'}">
+                            <input type="radio" name="options" value="Male" data-bind="checked: surveyResult.gender">Male
+                        </label>
+                    </div>
+                    <br /><br /><br />
+                    <div class="btn-group" data-bind="visible: surveyResult.gender">
+                        <label class="btn btn-primary" data-bind="css: {active: surveyResult.ageRange() == 'Range0to4'}">
+                            <input type="radio" name="options" value="Range0to4" data-bind="checked: surveyResult.ageRange">0 to 4 yrs
+                        </label>
+                        <label class="btn btn-primary" data-bind="css: {active: surveyResult.ageRange() == 'Range5to16'}">
+                            <input type="radio" name="options" value="Range5to16" data-bind="checked: surveyResult.ageRange">5 to 16 yrs
+                        </label>
+                        <label class="btn btn-primary" data-bind="css: {active: surveyResult.ageRange() == 'Range17to29'}">
+                            <input type="radio" name="options" value="Range17to29" data-bind="checked: surveyResult.ageRange">17 to 29 yrs
+                        </label>
+                        <label class="btn btn-primary" data-bind="css: {active: surveyResult.ageRange() == 'Range30to45'}">
+                            <input type="radio" name="options" value="Range30to45" data-bind="checked: surveyResult.ageRange">30 to 45 yrs
+                        </label>
+                        <label class="btn btn-primary" data-bind="css: {active: surveyResult.ageRange() == 'Range46to64'}">
+                            <input type="radio" name="options" value="Range46to64" data-bind="checked: surveyResult.ageRange">46 to 64 yrs
+                        </label>
+                        <label class="btn btn-primary" data-bind="css: {active: surveyResult.ageRange() == 'Range65Plus'}">
+                            <input type="radio" name="options" value="Range65Plus" data-bind="checked: surveyResult.ageRange">65 yrs plus
+                        </label>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div data-bind="visible: surveyResult.ageRange()">
+                    <h3>Show us your style</h3>
+                    <button type="button" class="btn btn-success" data-bind="click: saveSurvey">Now choose style images</button>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <h4 data-bind="visible: surveyTemplate.images().count > 0">Select one or more images that shows your style</h4>
+            <div data-bind="foreach: surveyTemplate.images">
+                <div class="col-md-3" >
+                    <img class="img-responsive imageToSelect" data-bind="attr: { src: $data.url }, click: $root.selectImage, css: { imageSelected: $data.selected()}" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div data-bind="visible: selectedImageCount() > 0">
+                    <br /><br />
+                    <button type="button" class="btn btn-success" data-bind="click: submitStyle">Submit Your Style</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="success" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3>Success</h3>
+                </div>
+                <div class="modal-body">
+                    Thank you for submitting your style preferences on zulily.<br /><br />
+                    We will use these to make your future shopping on our site even better!<br /><br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+        @section scripts{
+            <script type="text/javascript">
+                window.vm = new ZulilyHPViewModel();
+
+                $(function () {
+                    ko.applyBindings(window.vm, $('#view-homepage')[0]);
+                    window.vm.load();
+                });
+            </script>
+        }
