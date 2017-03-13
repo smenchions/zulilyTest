@@ -30,11 +30,11 @@ $ git clone https://github.com/smenchions/zulilyTest.git
 * Ensure you have access to a MongoDB server. Currently we set the connection string to it from the appsettings.json file. Edit that setting.
 * From the directory which contains the Dockerfile pulled from git run the following command
 ```
-docker build -t zulilyTest .
+docker build -t zulilytest .
 ```
 * After your Docker image is built from the Dockerfile, run the following to start up the image
 ```
-docker run --name zulilyTest -d -p 7000:5000 zulilyTest
+docker run --name zulilyTest -d -p 7000:5000 zulilytest
 ```
 * The above command will make the web site for this project accessible on port 7000 of your operating system. Ensure you have this port open on your local server.
 * You will have to hit your newly created website on port 7000 a few times before it comes up in your browser. It take 10 to 30 seconds for .NET Core to start on a linux server.

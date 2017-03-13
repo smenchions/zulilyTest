@@ -26,8 +26,8 @@ namespace UnitTests
         public void StartUp()
         {
             //These should not be stored here but rather in some configuration file that is used when test runner is running
-            RepositoryFactory._connectionString = "mongodb://menchions.com:27000/";
-            RepositoryFactory._databaseName = "Test";
+            RepositoryFactory._connectionString = "mongodb://54.241.188.114:27000/";
+            RepositoryFactory._databaseName = "Staging";
 
             //ensure we have a clean DB to start with. The Cleanup Method below does this, but just being sure.
             var _client = new MongoClient(RepositoryFactory._connectionString);
