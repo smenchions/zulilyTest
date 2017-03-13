@@ -160,6 +160,7 @@ var ZulilyHPViewModel = function () {
             contentType: 'application/json; charset=utf-8'
         }).success(function (results) {
             self.loading(false);
+            self.surveyResult.fromServerModel(results);
             self.loadSurveyTemplate();
         }).fail(function (err) {
             self.loading(false);
